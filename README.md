@@ -1,6 +1,6 @@
-create-react-app react_spa
-npx create-react-app react_spa
-cd react_spa/
+create-react-app react_spa<br />
+npx create-react-app react_spa<br />
+cd react_spa/<br />
 npm i react-router-dom --save
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Route,
   NavLink,
-  HashRouter
+  BrowserRouter
 } from "react-router-dom";
 import Home from "./static_pages/Home";
 import About from "./static_pages/About";
@@ -13,7 +13,7 @@ import './App.css';
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
     <div className="App">
       <header class="navbar navbar-fixed-top navbar-inverse">
         <div class="container">
@@ -60,7 +60,7 @@ function App() {
         </footer>
       </div>
     </div>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 

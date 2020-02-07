@@ -8,34 +8,33 @@ import Home from "./static_pages/Home";
 import About from "./static_pages/About";
 import Contact from "./static_pages/Contact";
 import Help from "./static_pages/Help";
-import logo from './logo.svg';
 import './App.css';
-import { Container } from 'react-bootstrap';
-import UserActionApp from './UserCRUD/UserAction';
+import 'bootstrap/dist/js/bootstrap.min.js';
+import Products from './products/Index';
 
 function App() {
   return (
     <BrowserRouter>
     <div className="App">
-      <header class="navbar navbar-fixed-top navbar-inverse">
-        <div class="container">
+      <header className="navbar navbar-fixed-top navbar-inverse">
+        <div className="container">
         <NavLink exact id="logo" to="/">sample app</NavLink>
           <nav>
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed"
+            <div className="navbar-header">
+              <button type="button" className="navbar-toggle collapsed"
                       data-toggle="collapse"
                       data-target="#bs-example-navbar-collapse-1"
                       aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                <span className="sr-only">Toggle navigation</span>
+                <span className="icon-bar"></span>
+                <span className="icon-bar"></span>
+                <span className="icon-bar"></span>
               </button>
             </div>
-            <ul class="nav navbar-nav navbar-right collapse navbar-collapse"
+            <ul className="nav navbar-nav navbar-right collapse navbar-collapse"
                 id="bs-example-navbar-collapse-1">
               <li><NavLink exact to="/">Home</NavLink></li>
-              <li><NavLink to="/users">Users</NavLink></li>
+              <li><NavLink to="/products">Products</NavLink></li>
               <li><NavLink to="/help">Help</NavLink></li>
                 <li><a href="/login">Log in</a></li>
             </ul>
@@ -43,14 +42,14 @@ function App() {
         </div>
       </header>
 
-      <div class="container">
+      <div className="container">
         <Route exact path="/" component={Home}/>
-        <Route path="/users" component={UserActionApp}/>
+        <Route path="/products" component={Products}/>
         <Route path="/about" component={About}/>
         <Route path="/contact" component={Contact}/>
         <Route path="/help" component={Help}/>
 
-        <footer class="footer">
+        <footer className="footer">
           <small>
             The <a href="https://www.railstutorial.org/">React Tutorial</a> by <a href="https://mdnv.github.io/">mdnv</a>
           </small>

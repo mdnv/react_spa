@@ -10,6 +10,8 @@ import Contact from "./static_pages/Contact";
 import Help from "./static_pages/Help";
 import logo from './logo.svg';
 import './App.css';
+import { Container } from 'react-bootstrap';
+import UserActionApp from './UserCRUD/UserAction';
 
 function App() {
   return (
@@ -33,6 +35,7 @@ function App() {
             <ul class="nav navbar-nav navbar-right collapse navbar-collapse"
                 id="bs-example-navbar-collapse-1">
               <li><NavLink exact to="/">Home</NavLink></li>
+              <li><NavLink to="/users">Users</NavLink></li>
               <li><NavLink to="/help">Help</NavLink></li>
                 <li><a href="/login">Log in</a></li>
             </ul>
@@ -42,6 +45,7 @@ function App() {
 
       <div class="container">
         <Route exact path="/" component={Home}/>
+        <Route path="/users" component={UserActionApp}/>
         <Route path="/about" component={About}/>
         <Route path="/contact" component={Contact}/>
         <Route path="/help" component={Help}/>

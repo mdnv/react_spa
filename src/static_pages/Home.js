@@ -12,7 +12,7 @@ class Home extends Component {
             </h2>
             <a class="btn btn-lg btn-primary" href="/signup">Sign up now!</a>
         </div>
-        <a href="https://rubyonrails.org/"><img alt="Rails logo" width="200" src={logo} /></a>
+        <a href="https://rubyonrails.org/"><img alt="Rails logo" width="70" src={logo} /></a>
         </div>
     );
   }

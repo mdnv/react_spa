@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Route,
   NavLink,
+  Switch,
   BrowserRouter
 } from "react-router-dom";
 import Home from "./static_pages/Home";
@@ -10,10 +11,10 @@ import Contact from "./static_pages/Contact";
 import Help from "./static_pages/Help";
 import './App.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import Articles from './articles/Index';
-import New from './articles/New';
-import Show from './articles/Show';
-import Edit from './articles/Edit';
+import Users from './users/Index';
+import UserNew from './users/New';
+import UserShow from './users/Show';
+import UserEdit from './users/Edit';
 
 function App() {
   return (
@@ -37,7 +38,7 @@ function App() {
             <ul className="nav navbar-nav navbar-right collapse navbar-collapse"
                 id="bs-example-navbar-collapse-1">
               <li><NavLink exact to="/">Home</NavLink></li>
-              <li><NavLink to="/articles">Articles</NavLink></li>
+              <li><NavLink to="/users">Users</NavLink></li>
               <li><NavLink to="/help">Help</NavLink></li>
                 <li><a href="/login">Log in</a></li>
             </ul>
@@ -46,14 +47,17 @@ function App() {
       </header>
 
       <div className="container">
+        <Switch>
         <Route exact path="/" component={Home}/>
         <Route path="/about" component={About}/>
         <Route path="/contact" component={Contact}/>
         <Route path="/help" component={Help}/>
-        <Route exact path="/articles" component={Articles}/>
-        <Route exact path="/articles/new" component={New}/>
-        <Route exact path="/articles/:id" component={Show}/>
-        <Route exact path="/articles/:id/edit" component={Edit}/>
+        <Route exact path="/users" component={Users}/>
+        <Route exact path="/users/new" component={UserNew}/>
+        <Route exact path="/users/:id" component={UserShow}/>
+        <Route exact path="/users/:id/edit" component={UserEdit}/>
+        <Route exact path="/signup" component={UserNew}/>
+        </Switch>
 
         <footer className="footer">
           <small>

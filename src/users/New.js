@@ -28,7 +28,7 @@ class New extends Component {
 
     axios
       .post(
-        "http://localhost:3001/en/api/v1/users",
+        "http://localhost:3000/en/api/v1/users",
         {
           user: {
             name: name,
@@ -43,21 +43,23 @@ class New extends Component {
         if (response.data.user) {
           // this.props.handleSuccessfulAuth(response.data);
           this.setState({errorMessage: ""});
+          this.props.history.push("/");
+          console.log(response);
         }
-        if (response.data.errors) {
+        if (response.data.error) {
           // this.props.handleSuccessfulAuth(response.data);
-          this.setState({errorMessage: response.data.errors});
+          this.setState({errorMessage: response.data.error});
         }
       })
       .catch(error => {
-        console.log("registration error", error);
+        console.log(error)
       });
     event.preventDefault();
   }
 
   render() {
     return (
-      <div>
+      <React.Fragment>
       <h1>Sign up</h1>
 
       <div className="row">
@@ -126,7 +128,7 @@ class New extends Component {
             <input type="submit" name="commit" value="Create my account" className="btn btn-primary" data-disable-with="Create my account" />
       </form>  </div>
       </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

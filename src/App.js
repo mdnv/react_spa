@@ -10,15 +10,19 @@ import Contact from "./static_pages/Contact";
 import Help from "./static_pages/Help";
 import './App.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
+import { Provider } from 'react-redux'
+import store from './redux/store';
 import CakeContainer from "./components/CakeContainer";
 
 function App() {
   return (
-    <BrowserRouter>
-    <div className="App">
-      <CakeContainer />
-    </div>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <div className="App">
+          <CakeContainer />
+        </div>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

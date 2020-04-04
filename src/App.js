@@ -12,6 +12,7 @@ import './App.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import { Provider } from 'react-redux'
 import store from './redux/store';
+import HooksCakeContainer from './components/HooksCakeContainer'
 import CakeContainer from "./components/CakeContainer";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <div className="App">
+          <HooksCakeContainer />
           <CakeContainer />
         </div>
       </BrowserRouter>

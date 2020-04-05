@@ -2,10 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { buyCake } from '../redux'
 
-function CakeContainer(props) {
+function CakeContainer (props) {
   return (
     <div>
-      <h2>Number of cakes - {props.numOfCakes}</h2>
+      <h2>Number of cakes - {props.numOfCakes} </h2>
       <button onClick={props.buyCake}>Buy Cake</button>
     </div>
   )
@@ -13,17 +13,17 @@ function CakeContainer(props) {
 
 const mapStateToProps = state => {
   return {
-    numOfCakes: state.numOfCakes
+    numOfCakes: state.cake.numOfCakes
   }
 }
 
-const mapDispathToProps = dispath => {
+const mapDispatchToProps = dispatch => {
   return {
-    buyCake: () => dispath(buyCake())
+    buyCake: () => dispatch(buyCake())
   }
 }
 
 export default connect(
   mapStateToProps,
-  mapDispathToProps
+  mapDispatchToProps
 )(CakeContainer)

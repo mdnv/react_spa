@@ -9,7 +9,7 @@ export const fetchUsers = () => {
   return (dispatch) => {
     dispatch(fetchUsersRequest())
     axios
-      .get('https://jsonplaceholder.typicode.com/users')
+      .get('http://localhost:3000/api/v1/logged_in', { withCredentials: true })
       .then(response => {
         dispatch(fetchUsersSuccess(response.data))
       })

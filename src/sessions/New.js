@@ -1,9 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 // import {Redirect} from 'react-router-dom';
-import axios from "axios";
+import axios from "axios"
 import {
   NavLink,
-} from "react-router-dom";
+} from "react-router-dom"
+import { connect } from 'react-redux'
+import { fetchUsers } from '../redux'
 
 class New extends Component {
     constructor(props) {
@@ -24,7 +26,7 @@ class New extends Component {
     });
   }
 
-  handleSubmit(event) {
+  handleSubmit(event, props) {
     const { email, password, remember_me } = this.state;
 
     axios
@@ -42,6 +44,7 @@ class New extends Component {
       .then(response => {
         if (response.data.user) {
           this.props.history.push("/");
+          // this.props.fetchUsers;
           console.log(response);
         }
         if (response.data.flash) {
@@ -115,4 +118,20 @@ class New extends Component {
   }
 }
 
-export default New;
+const mapStateToProps = state => {
+  return {
+    userData: state.user
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchUsers: () => dispatch(fetchUsers())
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(New)
+

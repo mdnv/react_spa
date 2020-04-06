@@ -17,7 +17,7 @@ const UsersContainer = ({ userData, fetchUsers }) => {
       <div>
         {userData &&
           userData.users &&
-          userData.users.map(user => <p>{user.name}</p>)}
+          userData.users.map(user => <p key={user.id}>{user.name}</p>)}
       </div>
     </div>
   )

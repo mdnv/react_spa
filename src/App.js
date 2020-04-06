@@ -4,19 +4,22 @@ import {
   NavLink,
   Switch,
   BrowserRouter
-} from "react-router-dom";
-import axios from "axios";
-import Home from "./static_pages/Home";
-import About from "./static_pages/About";
-import Contact from "./static_pages/Contact";
-import Help from "./static_pages/Help";
-import './App.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
-import Users from './users/Index';
-import UserNew from './users/New';
-import UserShow from './users/Show';
-import UserEdit from './users/Edit';
-import SessionNew from './sessions/New';
+} from "react-router-dom"
+import axios from "axios"
+import Home from "./static_pages/Home"
+import About from "./static_pages/About"
+import Contact from "./static_pages/Contact"
+import Help from "./static_pages/Help"
+import './App.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
+import Users from './components/UsersContainer'
+import UserNew from './users/New'
+import UserShow from './users/Show'
+import UserEdit from './users/Edit'
+import SessionNew from './sessions/New'
+
+import { Provider } from 'react-redux'
+import store from './redux/store'
 
 export default class App extends Component {
   constructor() {
@@ -70,6 +73,7 @@ export default class App extends Component {
 
   render() {
     return (
+      <Provider store={store}>
       <BrowserRouter>
       <div className="App">
         <header className="navbar navbar-fixed-top navbar-inverse">
@@ -147,6 +151,7 @@ export default class App extends Component {
         </div>
       </div>
       </BrowserRouter>
+      </Provider>
     );
   }
 }

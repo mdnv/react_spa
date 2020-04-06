@@ -1,38 +1,28 @@
-import React from 'react';
-import {
-  Route,
-  NavLink,
-  BrowserRouter
-} from "react-router-dom";
-import Home from "./static_pages/Home";
-import About from "./static_pages/About";
-import Contact from "./static_pages/Contact";
-import Help from "./static_pages/Help";
-import './App.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
+import React from 'react'
 import { Provider } from 'react-redux'
-import store from './redux/store';
-import HooksCakeContainer from './components/HooksCakeContainer'
-import CakeContainer from "./components/CakeContainer";
-import IceCreamContainer from './components/IceCreamContainer'
-import NewCakeContainer from './components/NewCakeContainer'
-import ItemContainer from './components/ItemContainer'
+import './App.css'
+import store from './redux/store'
+// import CakeContainer from './components/CakeContainer'
+// import HooksCakeContainer from './components/HooksCakeContainer'
+// import IceCreamContainer from './components/IceCreamContainer'
+// import NewCakeContainer from './components/NewCakeContainer'
+// import ItemContainer from './components/ItemContainer'
+import UsersContainer from './components/UsersContainer'
 
-function App() {
+function App () {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <div className="App">
-          <ItemContainer cake />
-          <ItemContainer />
-          <HooksCakeContainer />
-          <CakeContainer />
-          <IceCreamContainer />
-          <NewCakeContainer />
-        </div>
-      </BrowserRouter>
+      <div className='App'>
+        <UsersContainer />
+        {/* <ItemContainer cake />
+        <ItemContainer />
+        <NewCakeContainer />
+        <CakeContainer />
+        <HooksCakeContainer />
+        <IceCreamContainer /> */}
+      </div>
     </Provider>
-  );
+  )
 }
 
-export default App;
+export default App

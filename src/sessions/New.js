@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-// import {Redirect} from 'react-router-dom';
+// import {Redirect} from 'react-router-dom'
 import axios from "axios"
 import {
   NavLink,
 } from "react-router-dom"
-import { toast } from 'react-toastify';
+import flashMessage from '../shared/flashMessages'
 import { connect } from 'react-redux'
 import { fetchUsers } from '../redux'
 
@@ -44,32 +44,11 @@ class New extends Component {
       )
       .then(response => {
         if (response.data.user) {
+          fetchUsers();
           this.props.history.push("/");
-          // this.props.fetchUsers;
-          console.log(response);
         }
         if (response.data.flash) {
-          this.setState({flash: response.data.flash});
-          switch(this.state.flash[0]) {
-            case "success":
-              toast("Default Notification !");
-              break;
-            case "danger":
-              toast.error(this.state.flash[1]);
-              break;
-            case "warning":
-              toast.warn(this.state.flash[1]);
-              break;
-            case "info":
-              toast("Default Notification !");
-              break;
-            default:
-          }
-          toast.eval(this.state.flash[0])(this.state.flash[1], {
-            position: toast.POSITION.TOP_CENTER
-          });
-
-          console.log(response);
+          flashMessage(...response.data.flash)
         }
       })
       .catch(error => {

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 // import {Redirect} from 'react-router-dom';
 import axios from "axios";
 import Pluralize from 'react-pluralize'
+import flashMessage from '../shared/flashMessages'
 
 class New extends Component {
     constructor(props) {
@@ -43,8 +44,8 @@ class New extends Component {
         if (response.data.user) {
           // this.props.handleSuccessfulAuth(response.data);
           this.setState({errorMessage: ""});
+          flashMessage(...response.data.flash);
           this.props.history.push("/");
-          console.log(response);
         }
         if (response.data.error) {
           // this.props.handleSuccessfulAuth(response.data);

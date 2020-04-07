@@ -44,14 +44,14 @@ const Header = ({ userData, fetchUsers }) => {
             <li><NavLink to="/help">Help</NavLink></li>
             {
               userData.loading ? (
-                <li><a>Loading</a></li>
+                <li><a href="/">Loading</a></li>
               ) : userData.error ? (
-                <li><a>{userData.error}</a></li>
+                <li><a href="/">{userData.error}</a></li>
               ) : userData.users ? (
                 <React.Fragment>
                 <li><NavLink to="/users">Users</NavLink></li>
                 <li className="dropdown">
-                  <a href="#" className="dropdown-toggle" data-toggle="dropdown">
+                  <a href="/" className="dropdown-toggle" data-toggle="dropdown">
                     Account <b className="caret"></b>
                   </a>
                   <ul className="dropdown-menu">

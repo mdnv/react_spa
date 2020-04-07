@@ -1,11 +1,9 @@
-import React, { Component, useEffect } from "react";
+import React from "react";
 import {
   Route,
-  NavLink,
   Switch,
   BrowserRouter
 } from "react-router-dom"
-import axios from "axios"
 import Home from "./static_pages/Home"
 import About from "./static_pages/About"
 import Contact from "./static_pages/Contact"
@@ -22,8 +20,6 @@ import Footer from './layouts/Footer'
 
 import { Provider } from 'react-redux'
 import store from './redux/store'
-import { connect } from 'react-redux'
-import { fetchUsers } from './redux'
 
 const App = () => {
   return (

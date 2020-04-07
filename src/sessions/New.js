@@ -4,6 +4,7 @@ import axios from "axios"
 import {
   NavLink,
 } from "react-router-dom"
+import { toast } from 'react-toastify';
 import { connect } from 'react-redux'
 import { fetchUsers } from '../redux'
 
@@ -49,6 +50,25 @@ class New extends Component {
         }
         if (response.data.flash) {
           this.setState({flash: response.data.flash});
+          switch(this.state.flash[0]) {
+            case "success":
+              toast("Default Notification !");
+              break;
+            case "danger":
+              toast.error(this.state.flash[1]);
+              break;
+            case "warning":
+              toast.warn(this.state.flash[1]);
+              break;
+            case "info":
+              toast("Default Notification !");
+              break;
+            default:
+          }
+          toast.eval(this.state.flash[0])(this.state.flash[1], {
+            position: toast.POSITION.TOP_CENTER
+          });
+
           console.log(response);
         }
       })
@@ -61,7 +81,7 @@ class New extends Component {
   render() {
     return (
       <React.Fragment>
-      <div className={"alert alert-" + this.state.flash[0]}>{this.state.flash[1]}</div>
+      {/* <div className={"alert alert-" + this.state.flash[0]}>{this.state.flash[1]}</div> */}
       <h1>Log in</h1>
       <div className="row">
         <div className="col-md-6 col-md-offset-3">

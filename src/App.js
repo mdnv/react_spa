@@ -4,11 +4,13 @@ import {
   Switch,
   BrowserRouter
 } from "react-router-dom"
+import { toast } from 'react-toastify';
 import Home from "./static_pages/Home"
 import About from "./static_pages/About"
 import Contact from "./static_pages/Contact"
 import Help from "./static_pages/Help"
 import './App.css'
+import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/js/bootstrap.min.js'
 import Users from './components/UsersContainer'
 import UserNew from './users/New'
@@ -21,6 +23,11 @@ import Footer from './layouts/Footer'
 import { Provider } from 'react-redux'
 import store from './redux/store'
 
+toast.configure({
+  autoClose: 8000,
+  draggable: false,
+  //etc you get the idea
+});
 const App = () => {
   return (
     <Provider store={store}>

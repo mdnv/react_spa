@@ -7,6 +7,10 @@ import { connect } from 'react-redux'
 import { fetchUsers } from '../redux'
 
 const Home = ({ userData, fetchUsers }) => {
+  useEffect(() => {
+    fetchUsers()
+  }, [])
+
   return userData.loading ? (
     <h2>Loading</h2>
   ) : userData.error ? (

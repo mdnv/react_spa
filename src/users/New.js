@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 // import {Redirect} from 'react-router-dom';
 import axios from "axios";
-import Pluralize from 'react-pluralize'
 import flashMessage from '../shared/flashMessages'
+import errorMessage from '../shared/errorMessages'
 
 class New extends Component {
     constructor(props) {
@@ -73,16 +73,7 @@ class New extends Component {
           onSubmit={this.handleSubmit}
           >
             { this.state.errorMessage &&
-              <div id="error_explanation">
-                <div className="alert alert-danger">
-                  The form contains <Pluralize singular={'error'} count={ this.state.errorMessage.length } />.
-                </div>
-                <ul>
-                  { this.state.errorMessage.map((error, i) => {
-                     return (<li key={i}>{error}</li>)
-                  })}
-                </ul>
-              </div>
+              errorMessage(this.state.errorMessage)
             }
 
             <label htmlFor="user_name">Name</label>

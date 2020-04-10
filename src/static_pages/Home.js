@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import logo from '../logo.svg';
 import {
   NavLink,
 } from "react-router-dom";
 import { connect } from 'react-redux'
-import { fetchUsers } from '../redux'
 
-const Home = ({ userData, fetchUsers }) => {
+const Home = ({ userData }) => {
   return userData.loading ? (
     <h2>Loading</h2>
   ) : userData.error ? (
@@ -33,13 +32,6 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchUsers: () => dispatch(fetchUsers())
-  }
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Home)

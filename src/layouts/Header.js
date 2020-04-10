@@ -9,7 +9,7 @@ import { fetchUsers } from '../redux'
 const Header = ({ userData, fetchUsers }) => {
   useEffect(() => {
     fetchUsers()
-  }, [])
+  }, [fetchUsers])
 
   const onClick = () => {
     axios

@@ -28,7 +28,7 @@ const New = ({ userData, fetchUsers }) => {
   const handleSubmit = (e) => {
     axios
       .post(
-        "http://localhost:3000/login",
+        "http://localhost:3000/api/login",
         {
           session: {
             email: email,

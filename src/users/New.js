@@ -29,7 +29,7 @@ class New extends Component {
 
     axios
       .post(
-        "http://localhost:3000/en/api/v1/users",
+        "http://localhost:3000/api/users",
         {
           user: {
             name: name,

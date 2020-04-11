@@ -59,7 +59,8 @@ const Header = ({ userData, fetchUsers }) => {
                     <li><a href="/users/127/edit">Settings</a></li>
                     <li className="divider"></li>
                     <li>
-                      <button onClick={onClick}>Logout</button>
+                      {/*<button onClick={onClick}>Logout</button>*/}
+                      <a href="#logout" onClick={onClick}>Logout</a>
                     </li>
                   </ul>
                 </li>

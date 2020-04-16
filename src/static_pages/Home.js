@@ -5,19 +5,23 @@ import {
   NavLink,
 } from "react-router-dom"
 import { connect } from 'react-redux'
-import Pagination from "react-js-pagination";
+import Pagination from 'react-js-pagination'
+import { useQueryParam, NumberParam } from 'use-query-params'
 
 const Home = ({ userData }) => {
+  const [page, setPage] = useQueryParam('page', NumberParam);
+  const [per, setPer] = useQueryParam('per', NumberParam);
+  if ((typeof per) == "undefined") { setPer(5) }
   const [feed_items, setFeedItems] = useState([]);
   const [total_count, setTotalCount] = useState(1);
-  const [current_page, setCurrentPage] = useState(1);
+  const [current_page, setCurrentPage] = useState(page);
+  if ((typeof page) == "undefined") { setPage(current_page) }
 
   useEffect(() => {
-    let url = 'http://localhost:3000/api?page=1'
     axios
       .get(
-        url,
-        {params: {page: current_page},
+        'http://localhost:3000/api',
+        {params: {page: page, per: per},
         withCredentials: true }
       )
       .then(response => {
@@ -32,11 +36,12 @@ const Home = ({ userData }) => {
       .catch(error => {
         console.log(error)
       });
-  }, [current_page])
+  }, [page, per])
 
   const handlePageChange = pageNumber => {
     console.log(`active page is ${pageNumber}`);
     setCurrentPage(pageNumber);
+    setPage(pageNumber);
   }
 
   return userData.loading ? (
@@ -45,6 +50,10 @@ const Home = ({ userData }) => {
     <h2>{userData.error}</h2>
   ) : userData.users ? (
     <div className="row">
+      {/*<h1>num is {page}</h1>
+      <h1>num is {typeof page}</h1>
+      <h1>num is {per}</h1>
+      <h1>num is {typeof per}</h1>*/}
       <aside className="col-md-4">
         <section className="user_info">
           <a href="/users/1"><img alt="Example User" className="gravatar" src="https://secure.gravatar.com/avatar/bebfcf57d6d8277d806a9ef3385c078d?s=50" /></a>
@@ -97,7 +106,7 @@ const Home = ({ userData }) => {
         <h3>Micropost Feed</h3>
         <ol className="microposts">
           { feed_items.map((i, t) => (
-              <li key={t} id= {'micropost-300'+i.id} >
+              <li key={t} id= {'micropost-'+i.id} >
                 <a href={'/users/'+i.user_id}>
                   <img alt={i.user_name} className="gravatar" src={"https://secure.gravatar.com/avatar/"+i.gravatar_id+"?s="+i.size} />
                 </a>
@@ -109,14 +118,14 @@ const Home = ({ userData }) => {
         </ol>
 
         <Pagination
-          activePage={current_page}
-          itemsCountPerPage={2}
+          activePage={page}
+          itemsCountPerPage={per}
           totalItemsCount={total_count}
           pageRangeDisplayed={5}
           onChange={handlePageChange}
         />
 
-        <ul className="pagination">
+        {/*<ul className="pagination">
           <li className="first"><a href="/">&laquo; First</a></li>
           <li className="prev"><a rel="prev" href="/?page=5">&lsaquo; Prev</a></li>
           <li className="page gap disabled"><a href="#d">&hellip;</a></li>
@@ -159,6 +168,7 @@ const Home = ({ userData }) => {
           <li className="next"><a rel="next" href="/?page=4">Next &rsaquo;</a></li>
           <li className="last"><a href="/?page=125">Last &raquo;</a></li>
         </ul>
+      */}
       </div>
   </div>
   ) : (

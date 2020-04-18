@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
 import axios from "axios"
 import {
-  NavLink
+  NavLink,
+  useHistory,
 } from "react-router-dom"
 import { connect } from 'react-redux'
 import { fetchUsers } from '../redux'
 
 const Header = ({ userData, fetchUsers }) => {
+  let history = useHistory();
   useEffect(() => {
     fetchUsers()
   }, [fetchUsers])
@@ -16,6 +18,7 @@ const Header = ({ userData, fetchUsers }) => {
       .delete("http://localhost:3000/api/logout", { withCredentials: true })
       .then(response => {
         fetchUsers();
+        history.push("/");
       })
       .catch(error => {
         console.log("logout error", error);

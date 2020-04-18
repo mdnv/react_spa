@@ -5,11 +5,10 @@ import { useSelector } from 'react-redux'
 import flashMessage from '../shared/flashMessages'
 
 export default function Users() {
-  const [users, setUsers] = useState([]);
-  const [page, setPage] = useState(1);
-  const [total_count, setTotalCount] = useState(1);
-  const userData = useSelector(state => state.user)
-  const current_user = userData.users;
+  const [users, setUsers] = useState([])
+  const [page, setPage] = useState(1)
+  const [total_count, setTotalCount] = useState(1)
+  const current_user = useSelector(state => state.user.users)
 
   useEffect(() => {
     axios

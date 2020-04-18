@@ -25,7 +25,6 @@ const Home = ({ userData }) => {
         withCredentials: true }
       )
       .then(response => {
-        console.log(response)
         if (response.data.feed_items) {
           setFeedItems(response.data.feed_items);
           setTotalCount(response.data.total_count);
@@ -39,7 +38,6 @@ const Home = ({ userData }) => {
   }, [page, per])
 
   const handlePageChange = pageNumber => {
-    console.log(`active page is ${pageNumber}`);
     setCurrentPage(pageNumber);
     setPage(pageNumber);
   }
@@ -112,7 +110,12 @@ const Home = ({ userData }) => {
                 </a>
                 <span className="user"><a href={'/users/'+i.user_id}>{i.user_name}</a></span>
                 <span className="content">{i.content}</span>
-                <span className="timestamp">{'Posted '+i.timestamp+' days ago.'}</span>
+                <span className="timestamp">
+                {'Posted '+i.timestamp+' ago. '}
+                {userData.users.id === i.user_id &&
+                  <a data-confirm="You sure?" rel="nofollow" data-method="delete" href="/microposts/25">delete</a>
+                }
+                </span>
               </li>
           ))}
         </ol>

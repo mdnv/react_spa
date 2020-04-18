@@ -58,7 +58,7 @@ const Header = ({ userData, fetchUsers }) => {
                     Account <b className="caret"></b>
                   </a>
                   <ul className="dropdown-menu">
-                    <li><a href="/users/127">Profile</a></li>
+                    <li><a href={"/users/"+userData.users.id}>Profile</a></li>
                     <li><a href="/users/127/edit">Settings</a></li>
                     <li className="divider"></li>
                     <li>

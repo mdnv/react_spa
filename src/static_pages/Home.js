@@ -16,6 +16,10 @@ const Home = ({ userData }) => {
   const [total_count, setTotalCount] = useState(1);
   const [current_page, setCurrentPage] = useState(page);
   if ((typeof page) == "undefined") { setPage(current_page) }
+  const [following, setFollowing] = useState(null);
+  const [followers, setFollowers] = useState(null);
+  const [micropost, setMicropost] = useState();
+  const [gravatar, setGavatar] = useState();
 
   useEffect(() => {
     axios
@@ -28,6 +32,10 @@ const Home = ({ userData }) => {
         if (response.data.feed_items) {
           setFeedItems(response.data.feed_items);
           setTotalCount(response.data.total_count);
+          setFollowing(response.data.following);
+          setFollowers(response.data.followers);
+          setMicropost(response.data.micropost);
+          setGavatar(response.data.gravatar);
         } else {
           setFeedItems([]);
         }
@@ -54,24 +62,24 @@ const Home = ({ userData }) => {
       <h1>num is {typeof per}</h1>*/}
       <aside className="col-md-4">
         <section className="user_info">
-          <a href="/users/1"><img alt="Example User" className="gravatar" src="https://secure.gravatar.com/avatar/bebfcf57d6d8277d806a9ef3385c078d?s=50" /></a>
-          <h1>Example User</h1>
-          <span><a href="/users/1">view my profile</a></span>
-          <span>50 microposts</span>
+          <img alt={userData.users.name} className="gravatar" src={"https://secure.gravatar.com/avatar/"+gravatar+"?s=80"} />
+          <h1>{userData.users.name}</h1>
+          <span><NavLink to={"/users/"+userData.users.id}>view my profile</NavLink></span>
+          <span><b>Microposts:</b> {micropost}</span>
         </section>
 
         <section className="stats">
           <div className="stats">
-            <a href="/users/1/following">
+            <NavLink to={"/users/"+userData.users.id+"/following"}>
               <strong id="following" className="stat">
-                49
+                {following}
               </strong> following
-            </a>
-            <a href="/users/1/followers">
+            </NavLink>
+            <NavLink to={"/users/"+userData.users.id+"/followers"}>
               <strong id="followers" className="stat">
-                38
+                {followers}
               </strong> followers
-            </a>
+            </NavLink>
           </div>
         </section>
 

@@ -21,7 +21,6 @@ export default function UserShow(){
         withCredentials: true }
       )
       .then(response => {
-        console.log(response)
         if (response.data.user) {
           setUser(response.data.user);
           setMicroposts(response.data.microposts);
@@ -47,7 +46,6 @@ export default function UserShow(){
       .delete('http://localhost:3000/api/relationships/'+id_relationships, { withCredentials: true })
       .then(response => {
         if (response.data.unfollow) {
-          console.log(response);
           setIdRelationships(null);
         }
       })
@@ -68,7 +66,6 @@ export default function UserShow(){
       )
       .then(response => {
         if (response.data.follow) {
-          console.log(response);
           setIdRelationships(1);
         }
       })

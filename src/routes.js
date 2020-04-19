@@ -7,6 +7,8 @@ import UserNew from './users/New'
 import UserShow from './users/Show'
 import UserEdit from './users/Edit'
 import SessionNew from './sessions/New'
+import ShowFollowing from './users/ShowFollowing'
+import ShowFollowers from './users/ShowFollowers'
 
 
 const routes = [
@@ -19,7 +21,9 @@ const routes = [
     { path: "/users/:id", exact: true, component: UserShow },
     { path: "/users/:id/edit", exact: true, component: UserEdit },
     { path: "/signup", exact: true, component: UserNew },
-    { path: "/login", exact: true, component: SessionNew }
+    { path: "/login", exact: true, component: SessionNew },
+    { path: "/users/:id/following", exact: true, component: ShowFollowing },
+    { path: "/users/:id/followers", exact: true, component: ShowFollowers }
 ]
 
 export default routes

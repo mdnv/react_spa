@@ -3,6 +3,7 @@ import axios from 'axios'
 import Pagination from 'react-js-pagination'
 import { useSelector } from 'react-redux'
 import { useParams } from "react-router-dom"
+import flashMessage from '../shared/flashMessages'
 
 export default function UserShow(){
   const [user, setUser] = useState({})
@@ -34,7 +35,7 @@ export default function UserShow(){
       .catch(error => {
         console.log(error)
       });
-  }, [page, id_relationships])
+  }, [page, id_relationships, id])
 
   const handlePageChange = pageNumber => {
     console.log(`active page is ${pageNumber}`);
@@ -75,6 +76,41 @@ export default function UserShow(){
     e.preventDefault();
   }
 
+  const removeMicropost = (index, micropostid) => {
+    axios
+      .delete(
+        'http://localhost:3000/api/microposts/'+micropostid, { withCredentials: true }
+      )
+      .then(response => {
+        if (response.data.flash) {
+          flashMessage(...response.data.flash)
+          axios
+            .get(
+              'http://localhost:3000/api/users/'+id,
+              {params: {page: page},
+              withCredentials: true }
+            )
+            .then(response => {
+              if (response.data.user) {
+                setUser(response.data.user);
+                setMicroposts(response.data.microposts);
+                setTotalCount(response.data.total_count);
+                setIdRelationships(response.data.id_relationships);
+              } else {
+                setUser({});
+                setMicroposts([]);
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            });
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      });
+  };
+
   return (
     <div className="row">
       <aside className="col-md-4">
@@ -103,7 +139,7 @@ export default function UserShow(){
       </aside>
 
       <div className="col-md-8">
-        {Object.keys(current_user).length !== 0 && current_user.constructor === Object && current_user.id != id &&
+        {Object.keys(current_user).length !== 0 && current_user.constructor === Object && current_user.id !== parseInt(id) &&
         <div id="follow_form">
           {
             user.current_user_following_user ? (
@@ -164,7 +200,7 @@ export default function UserShow(){
                 <span className="timestamp">
                 {'Posted '+i.timestamp+' ago. '}
                 {user.id === i.user_id &&
-                  <a data-confirm="You sure?" rel="nofollow" data-method="delete" href="/microposts/25">delete</a>
+                  <a href={'#/microposts/'+i.id} onClick={() => removeMicropost(t, i.id)}>delete</a>
                 }
                 </span>
               </li>

@@ -23,7 +23,7 @@ const Home = ({ userData }) => {
   const [micropost, setMicropost] = useState();
   const [gravatar, setGavatar] = useState();
   const [content, setContent] = useState('');
-  const [image, setImage] = useState();
+  // const [image, setImage] = useState();
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
@@ -99,7 +99,6 @@ const Home = ({ userData }) => {
             });
         }
         if (response.data.error) {
-          console.log(response.data.error)
           setErrorMessage(response.data.error)
         }
       })
@@ -108,6 +107,39 @@ const Home = ({ userData }) => {
       });
     e.preventDefault();
   }
+
+  const removeMicropost = (index, micropostid) => {
+    axios
+      .delete(
+        'http://localhost:3000/api/microposts/'+micropostid, { withCredentials: true }
+      )
+      .then(response => {
+        if (response.data.flash) {
+          flashMessage(...response.data.flash)
+          axios
+            .get(
+              'http://localhost:3000/api',
+              {params: {page: page, per: per},
+              withCredentials: true }
+            )
+            .then(response => {
+              if (response.data.feed_items) {
+                setFeedItems(response.data.feed_items);
+                setTotalCount(response.data.total_count);
+                setMicropost(response.data.micropost);
+              } else {
+                setFeedItems([]);
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            });
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      });
+  };
 
   return userData.loading ? (
     <h2>Loading</h2>
@@ -211,7 +243,7 @@ const Home = ({ userData }) => {
                 <span className="timestamp">
                 {'Posted '+i.timestamp+' ago. '}
                 {userData.users.id === i.user_id &&
-                  <a data-confirm="You sure?" rel="nofollow" data-method="delete" href="/microposts/25">delete</a>
+                  <a href={'#/microposts/'+i.id} onClick={() => removeMicropost(t, i.id)}>delete</a>
                 }
                 </span>
               </li>

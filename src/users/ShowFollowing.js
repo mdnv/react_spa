@@ -31,7 +31,7 @@ export default function ShowFollowing() {
       .catch(error => {
         console.log(error)
       });
-  }, [page])
+  }, [page, id])
 
   const handlePageChange = pageNumber => {
     console.log(`active page is ${pageNumber}`);

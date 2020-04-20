@@ -58,8 +58,8 @@ const Header = ({ userData, fetchUsers }) => {
                     Account <b className="caret"></b>
                   </a>
                   <ul className="dropdown-menu">
-                    <li><a href={"/users/"+userData.users.id}>Profile</a></li>
-                    <li><a href="/users/127/edit">Settings</a></li>
+                    <li><NavLink to={"/users/"+userData.users.id}>Profile</NavLink></li>
+                    <li><NavLink to={"/users/"+userData.users.id+"/edit"}>Settings</NavLink></li>
                     <li className="divider"></li>
                     <li>
                       {/*<button onClick={onClick}>Logout</button>*/}

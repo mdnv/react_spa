@@ -1,80 +1,179 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from "react"
+import axios from 'axios'
+import { useParams } from "react-router-dom"
+import flashMessage from '../shared/flashMessages'
+import Pluralize from 'react-pluralize'
+import { useHistory } from "react-router-dom"
 
-// import { Link } from "react-router-dom";
+export default function UserEdit(){
+  let { id } = useParams();
+  const [user, setUser] = useState({})
 
-import axios from 'axios';
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [password_confirmation, setPasswordConfirmation] = useState('')
+  const [errors, setErrors] = useState('')
+  const [gravatar, setGravatar] = useState('')
 
-class Edit extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: '',
-      text: ''
-    }
+  let history = useHistory();
+
+  useEffect(() => {
+    axios
+      .get(
+        'http://localhost:3000/api/users/'+id+'/edit', { withCredentials: true }
+      )
+      .then(response => {
+        if (response.data.user) {
+          setUser(response.data.user);
+          setName(response.data.user.name);
+          setEmail(response.data.user.email);
+          setGravatar(response.data.gravatar);
+        }
+        if (response.data.flash) {
+          flashMessage(...response.data.flash);
+          history.push("/");
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      });
+  }, [id, history])
+
+  const handleNameInput = e => {
+    setName(e.target.value);
+  };
+
+  const handleEmailInput = e => {
+    setEmail(e.target.value);
+  };
+  const handlePasswordInput = e => {
+    setPassword(e.target.value);
+  };
+  const handlePasswordConfirmationInput = e => {
+    setPasswordConfirmation(e.target.value);
+  };
+
+  const handleUpdate = (e) => {
+    axios
+      .patch(
+        'http://localhost:3000/api/users/'+id,
+        {
+          user: {
+            name: name,
+            email: email,
+            password: password,
+            password_confirmation: password_confirmation
+          }
+        },
+        { withCredentials: true }
+      )
+      .then(response => {
+        if (response.data.flash_success) {
+          flashMessage(...response.data.flash_success)
+          setPassword('')
+          setPasswordConfirmation('')
+          axios
+            .get(
+              'http://localhost:3000/api/users/'+id+'/edit', { withCredentials: true }
+            )
+            .then(response => {
+              if (response.data.user) {
+                setUser(response.data.user);
+                setName(response.data.user.name);
+                setEmail(response.data.user.email);
+                setGravatar(response.data.gravatar);
+              }
+              if (response.data.flash) {
+                flashMessage(...response.data.flash);
+                history.push("/");
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            });
+        }
+        if (response.data.error) {
+          setErrors(response.data.error);
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      });
+    e.preventDefault();
   }
 
-  componentDidMount() {
-    const { match: { params: { id } } } = this.props;
-    // fetch(`http://localhost:3000/api/articles/${id}`).
-    //   then((response) => response.json()).
-    //   then((post) => this.setState({ ...post }));
-    var self = this;
-    axios.get(`http://localhost:3000/api/articles/${id}`)
-    .then(function (response) {
-      // handle success
-      self.setState({ post: response.data.article });
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    .finally(function () {
-      // always executed
-    });
-  }
-
-  handleInputChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
-  updatePostRequest = (event) => {
-    fetch(`http://localhost:3000/api/articles/${this.state.post.id}`, {
-      method: 'put',
-      body: JSON.stringify(this.state),
-      headers: { 'Content-Type': 'application/json' },
-    }).then((response) => {
-      alert('Post updated successfully');
-      window.location.href = '/';
-    });
-  }
-
-  render() {
-    const {title, text} = this.state;
-    return (
-      <div>
-        <h3>Edit Article</h3>
-        <div>
-          <label>Title: </label>
+  return (
+    <>
+    <h1>Update your profile</h1>
+    <div className="row">
+      <div className="col-md-6 col-md-offset-3">
+        <form
+        action="/users/1"
+        acceptCharset="UTF-8"
+        method="post"
+        onSubmit={handleUpdate}
+        >
+          { errors &&
+            <div id="error_explanation">
+              <div className="alert alert-danger">
+                The form contains <Pluralize singular={'error'} count={ errors.length } />.
+              </div>
+              <ul>
+                { errors.map((error, i) => {
+                   return (<li key={i}>{error}</li>)
+                })}
+              </ul>
+            </div>
+          }
+          <label htmlFor="user_name">Name</label>
           <input
-            type='text'
-            name='title'
-            value={title}
-            onChange={this.handleInputChange}
-            />
-        </div>
-        <div>
-          <label>Text: </label>
+          className="form-control"
+          type="text"
+          value={name}
+          name="name"
+          id="user_name"
+          onChange={handleNameInput}
+          />
+
+          <label htmlFor="user_email">Email</label>
           <input
-            type='text'
-            name='text'
-            value={text}
-            onChange={this.handleInputChange}
-            />
+          className="form-control"
+          type="email"
+          value={email}
+          name="email"
+          id="user_email"
+          onChange={handleEmailInput}
+          />
+
+          <label htmlFor="user_password">Password</label>
+          <input
+          className="form-control"
+          type="password"
+          name="password"
+          id="user_password"
+          value={password}
+          onChange={handlePasswordInput}
+          />
+
+          <label htmlFor="user_password_confirmation">Confirmation</label>
+          <input
+          className="form-control"
+          type="password"
+          name="password_confirmation"
+          id="user_password_confirmation"
+          value={password_confirmation}
+          onChange={handlePasswordConfirmationInput}
+          />
+
+          <input type="submit" name="commit" value="Save changes" className="btn btn-primary" data-disable-with="Save changes" />
+        </form>
+        <div className="gravatar_edit">
+          <img alt={user.name} className="gravatar" src={"https://secure.gravatar.com/avatar/"+gravatar+"?s=80"} />
+          <a href="https://gravatar.com/emails" target="_blank" rel="noopener noreferrer">change</a>
         </div>
-        <button onClick={this.updatePostRequest}>Update</button>
       </div>
-    );
-  }
+    </div>
+    </>
+  )
 }
-
-export default Edit;

@@ -7,6 +7,8 @@ import {
 import { connect } from 'react-redux'
 import Pagination from 'react-js-pagination'
 import { useQueryParam, NumberParam } from 'use-query-params'
+import flashMessage from '../shared/flashMessages'
+import Pluralize from 'react-pluralize'
 
 const Home = ({ userData }) => {
   const [page, setPage] = useQueryParam('page', NumberParam);
@@ -20,6 +22,9 @@ const Home = ({ userData }) => {
   const [followers, setFollowers] = useState(null);
   const [micropost, setMicropost] = useState();
   const [gravatar, setGavatar] = useState();
+  const [content, setContent] = useState('');
+  const [image, setImage] = useState();
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     axios
@@ -50,6 +55,60 @@ const Home = ({ userData }) => {
     setPage(pageNumber);
   }
 
+  const handleContentInput = e => {
+    setContent(e.target.value);
+  };
+  // const handleImageInput = e => {
+  //   setImage(e.target.value);
+  // };
+
+  const handleSubmit = (e) => {
+    axios
+      .post(
+        "http://localhost:3000/api/microposts",
+        {
+          micropost: {
+            content: content
+            // image: image
+          }
+        },
+        { withCredentials: true }
+      )
+      .then(response => {
+        if (response.data.flash) {
+          flashMessage(...response.data.flash)
+          setContent('')
+          setErrorMessage('')
+          axios
+            .get(
+              'http://localhost:3000/api',
+              {params: {page: page, per: per},
+              withCredentials: true }
+            )
+            .then(response => {
+              if (response.data.feed_items) {
+                setFeedItems(response.data.feed_items);
+                setTotalCount(response.data.total_count);
+                setMicropost(response.data.micropost);
+              } else {
+                setFeedItems([]);
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            });
+        }
+        if (response.data.error) {
+          console.log(response.data.error)
+          setErrorMessage(response.data.error)
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      });
+    e.preventDefault();
+  }
+
   return userData.loading ? (
     <h2>Loading</h2>
   ) : userData.error ? (
@@ -62,10 +121,10 @@ const Home = ({ userData }) => {
       <h1>num is {typeof per}</h1>*/}
       <aside className="col-md-4">
         <section className="user_info">
-          <img alt={userData.users.name} className="gravatar" src={"https://secure.gravatar.com/avatar/"+gravatar+"?s=80"} />
+          <img alt={userData.users.name} className="gravatar" src={"https://secure.gravatar.com/avatar/"+gravatar+"?s=50"} />
           <h1>{userData.users.name}</h1>
           <span><NavLink to={"/users/"+userData.users.id}>view my profile</NavLink></span>
-          <span><b>Microposts:</b> {micropost}</span>
+          <span><Pluralize singular={'micropost'} count={ micropost } /></span>
         </section>
 
         <section className="stats">
@@ -84,17 +143,46 @@ const Home = ({ userData }) => {
         </section>
 
         <section className="micropost_form">
-          <form encType="multipart/form-data" action="/microposts" acceptCharset="UTF-8" method="post">
-            <input type="hidden" name="authenticity_token" value="yLrWeOdIA+uxQ+TqTYLd+V+Y+XmFjtwK6XIYnDqlX+wEzHZ9GrAS1VyIXIupY9/cQlRUqyifmKsQ594Kc8xY1A==" />
-
+          <form
+          encType="multipart/form-data"
+          action="/microposts"
+          acceptCharset="UTF-8"
+          method="post"
+          onSubmit={handleSubmit}
+          >
+            { errorMessage &&
+              <div id="error_explanation">
+                <div className="alert alert-danger">
+                  The form contains { errorMessage.length } error.
+                </div>
+                <ul>
+                  { errorMessage.map((error, i) => {
+                     return (<li key={i}>{error}</li>)
+                  })}
+                </ul>
+              </div>
+            }
             <div className="field">
-                <textarea placeholder="Compose new micropost..." name="micropost[content]" id="micropost_content">
+                <textarea
+                placeholder="Compose new micropost..."
+                name="micropost[content]"
+                id="micropost_content"
+                value={content}
+                onChange={handleContentInput}
+                >
                 </textarea>
             </div>
             <input type="submit" name="commit" value="Post" className="btn btn-primary" data-disable-with="Post" />
-            <span className="image">
-              <input accept="image/jpeg,image/gif,image/png" type="file" name="micropost[image]" id="micropost_image" />
-            </span>
+            {/* <span className="image">
+              <input
+              accept="image/jpeg,image/gif,image/png"
+              type="file"
+              name="micropost[image]"
+              id="micropost_image"
+              value={Image}
+              onChange={handleImageInput}
+              />
+            </span>*/}
           </form>
           {/* <script type="text/javascript">
               $("#micropost_image").bind("change", function() {
@@ -117,7 +205,9 @@ const Home = ({ userData }) => {
                   <img alt={i.user_name} className="gravatar" src={"https://secure.gravatar.com/avatar/"+i.gravatar_id+"?s="+i.size} />
                 </a>
                 <span className="user"><a href={'/users/'+i.user_id}>{i.user_name}</a></span>
-                <span className="content">{i.content}</span>
+                <span className="content">
+                  {i.content}
+                </span>
                 <span className="timestamp">
                 {'Posted '+i.timestamp+' ago. '}
                 {userData.users.id === i.user_id &&

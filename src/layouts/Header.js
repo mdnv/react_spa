@@ -4,25 +4,28 @@ import {
   NavLink,
   useHistory,
 } from "react-router-dom"
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { fetchUsers } from '../redux'
 
-const Header = ({ userData, fetchUsers }) => {
-  let history = useHistory();
+export default function Header(){
+  let history = useHistory()
+  const userData = useSelector(state => state.user)
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    fetchUsers()
-  }, [fetchUsers])
+    dispatch(fetchUsers())
+  }, [])
 
   const onClick = () => {
     axios
       .delete("http://localhost:3000/api/logout", { withCredentials: true })
       .then(response => {
-        fetchUsers();
-        history.push("/");
+        dispatch(fetchUsers())
+        history.push("/")
       })
       .catch(error => {
-        console.log("logout error", error);
-      });
+        console.log("logout error", error)
+      })
   }
 
   return (
@@ -78,20 +81,3 @@ const Header = ({ userData, fetchUsers }) => {
     </header>
   )
 }
-
-const mapStateToProps = state => {
-  return {
-    userData: state.user
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchUsers: () => dispatch(fetchUsers())
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header)

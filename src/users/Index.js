@@ -36,21 +36,26 @@ export default function Users() {
   }
 
   const removeUser = (index, userid) => {
-    axios
-      .delete(
-        'http://localhost:3000/api/users/'+userid, { withCredentials: true }
-      )
-      .then(response => {
-        if (response.data.flash) {
-          const newUsers = [...users];
-          newUsers.splice(index, 1);
-          setUsers(newUsers);
-          flashMessage(...response.data.flash);
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      });
+    let sure = window.confirm("Are you sure?");
+    if (sure == true) {
+      axios
+        .delete(
+          'http://localhost:3000/api/users/'+userid, { withCredentials: true }
+        )
+        .then(response => {
+          if (response.data.flash) {
+            const newUsers = [...users];
+            newUsers.splice(index, 1);
+            setUsers(newUsers);
+            flashMessage(...response.data.flash);
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        });
+    } else {
+      // setErrorMessage('')
+    }
   };
 
   return (

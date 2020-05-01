@@ -1,50 +1,62 @@
-import React from "react";
-import {
-  Route,
-  Switch,
-  BrowserRouter
-} from "react-router-dom"
-import { toast } from 'react-toastify'
-import './App.css'
-import 'react-toastify/dist/ReactToastify.css'
-import 'bootstrap/dist/js/bootstrap.min.js'
-import Header from './layouts/Header'
-import Footer from './layouts/Footer'
-import routes from './routes'
-import { Provider } from 'react-redux'
-import store from './redux/store'
+import React, { useEffect, useRef, useState } from 'react'
+import lottie from 'lottie-web'
+import animation from './static/animation.json'
 
-toast.configure({
-  autoClose: 8000,
-  draggable: false,
-  position: toast.POSITION.TOP_CENTER,
-  //etc you get the idea
-});
-const App = () => {
+export default function App(){
+  const [show, setShow] = useState(false)
+  const _el = useRef(null)
+
+  useEffect(() => {
+    if (_el) {
+      lottie.loadAnimation({
+        container: _el.current,
+        renderer: 'svg',
+        animationData: animation,
+      })
+    }
+  }, [show])
+
+  const _click = () => {
+    const audioEl = document.getElementsByClassName("audio-element")[0]
+    audioEl.play()
+    setShow(true)
+    setTimeout(() => {setShow(false); audioEl.currentTime = 0;}, 3100)
+  }
+
   return (
-    <Provider store={store}>
-    <BrowserRouter>
-    <div className="App">
-      <Header />
-
-      <div className="container">
-        <Switch>
-        {routes.map((route, index) => (
-          <Route
-              key={index}
-              path={route.path}
-              exact={route.exact}
-              component={route.component}
-          />
-        ))}
-        </Switch>
-
-        <Footer />
-      </div>
+    <div>
+      <audio className="audio-element">
+        <source src="https://api.coderrocketfuel.com/assets/pomodoro-times-up.mp3"></source>
+      </audio>
+      <p>
+        <span
+          style={{
+            fontWeight: 'bold',
+            color: 'purple',
+            cursor: 'pointer',
+          }}
+          onClick={_click}
+        >
+          Click me
+        </span>
+        {' to see miracle'}
+      </p>
+      <p>Now go build something great.</p>
+      {show && (
+        <div
+          id="animation"
+          ref={_el}
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            top: 0,
+            left: 0,
+          }}
+        />
+      )}
     </div>
-    </BrowserRouter>
-    </Provider>
-  );
+  )
 }
 
-export default App;
+// https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Using_Web_Audio_API

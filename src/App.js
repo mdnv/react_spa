@@ -13,6 +13,7 @@ import Footer from './layouts/Footer'
 import routes from './routes'
 import { Provider } from 'react-redux'
 import store from './redux/store'
+import HttpsRedirect from 'react-https-redirect';
 
 toast.configure({
   autoClose: 8000,
@@ -22,6 +23,7 @@ toast.configure({
 });
 const App = () => {
   return (
+    <HttpsRedirect>
     <Provider store={store}>
     <BrowserRouter>
     <div className="App">
@@ -44,6 +46,7 @@ const App = () => {
     </div>
     </BrowserRouter>
     </Provider>
+    </HttpsRedirect>
   );
 }
 

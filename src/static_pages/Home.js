@@ -29,7 +29,7 @@ const Home = ({ userData }) => {
   useEffect(() => {
     axios
       .get(
-        'http://localhost:3000/api',
+        'https://railstutorialapi.herokuapp.com/api',
         {params: {page: page, per: per},
         withCredentials: true }
       )
@@ -65,7 +65,7 @@ const Home = ({ userData }) => {
   const handleSubmit = (e) => {
     axios
       .post(
-        "http://localhost:3000/api/microposts",
+        "https://railstutorialapi.herokuapp.com/microposts",
         {
           micropost: {
             content: content
@@ -81,7 +81,7 @@ const Home = ({ userData }) => {
           setErrorMessage('')
           axios
             .get(
-              'http://localhost:3000/api',
+              'https://railstutorialapi.herokuapp.com/api',
               {params: {page: page, per: per},
               withCredentials: true }
             )
@@ -111,14 +111,14 @@ const Home = ({ userData }) => {
   const removeMicropost = (index, micropostid) => {
     axios
       .delete(
-        'http://localhost:3000/api/microposts/'+micropostid, { withCredentials: true }
+        'https://railstutorialapi.herokuapp.com/microposts/'+micropostid, { withCredentials: true }
       )
       .then(response => {
         if (response.data.flash) {
           flashMessage(...response.data.flash)
           axios
             .get(
-              'http://localhost:3000/api',
+              'https://railstutorialapi.herokuapp.com/api',
               {params: {page: page, per: per},
               withCredentials: true }
             )

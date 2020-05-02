@@ -13,7 +13,7 @@ export default function Users() {
   useEffect(() => {
     axios
       .get(
-        'http://localhost:3000/api/users',
+        'https://railstutorialapi.herokuapp.com/api/users',
         {params: {page: page},
         withCredentials: true }
       )
@@ -40,7 +40,7 @@ export default function Users() {
     if (sure == true) {
       axios
         .delete(
-          'http://localhost:3000/api/users/'+userid, { withCredentials: true }
+          'https://railstutorialapi.herokuapp.com/api/users/'+userid, { withCredentials: true }
         )
         .then(response => {
           if (response.data.flash) {

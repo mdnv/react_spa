@@ -29,7 +29,7 @@ class New extends Component {
 
     axios
       .post(
-        "http://localhost:3000/api/users",
+        "https://railstutorialapi.herokuapp.com/api/users",
         {
           user: {
             name: name,

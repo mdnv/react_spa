@@ -9,7 +9,7 @@ export const fetchUsers = () => {
   return (dispatch) => {
     dispatch(fetchUsersRequest())
     axios
-      .get('http://localhost:3000/api/sessions', { withCredentials: true })
+      .get('https://railstutorialapi.herokuapp.com/api/sessions', { withCredentials: true })
       .then(response => {
         dispatch(fetchUsersSuccess(response.data))
       })

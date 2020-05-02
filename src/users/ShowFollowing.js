@@ -18,7 +18,7 @@ export default function ShowFollowing() {
   useEffect(() => {
     axios
       .get(
-        'http://localhost:3000/api/users/'+id+'/following',
+        'https://railstutorialapi.herokuapp.com/api/users/'+id+'/following',
         {params: {page: page},
         withCredentials: true }
       )
@@ -41,7 +41,7 @@ export default function ShowFollowing() {
   const removeUser = (index, userid) => {
     axios
       .delete(
-        'http://localhost:3000/api/users/'+userid, { withCredentials: true }
+        'https://railstutorialapi.herokuapp.com/api/users/'+userid, { withCredentials: true }
       )
       .then(response => {
         if (response.data.flash) {

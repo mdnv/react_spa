@@ -18,7 +18,7 @@ export default function Header(){
 
   const onClick = () => {
     axios
-      .delete("http://localhost:3000/api/logout", { withCredentials: true })
+      .delete("https://railstutorialapi.herokuapp.com/api/logout", { withCredentials: true })
       .then(response => {
         dispatch(fetchUsers())
         history.push("/")

@@ -21,7 +21,7 @@ export default function UserEdit(){
   useEffect(() => {
     axios
       .get(
-        'http://localhost:3000/api/users/'+id+'/edit', { withCredentials: true }
+        'https://railstutorialapi.herokuapp.com/api/users/'+id+'/edit', { withCredentials: true }
       )
       .then(response => {
         if (response.data.user) {
@@ -57,7 +57,7 @@ export default function UserEdit(){
   const handleUpdate = (e) => {
     axios
       .patch(
-        'http://localhost:3000/api/users/'+id,
+        'https://railstutorialapi.herokuapp.com/api/users/'+id,
         {
           user: {
             name: name,
@@ -75,7 +75,7 @@ export default function UserEdit(){
           setPasswordConfirmation('')
           axios
             .get(
-              'http://localhost:3000/api/users/'+id+'/edit', { withCredentials: true }
+              'https://railstutorialapi.herokuapp.com/api/users/'+id+'/edit', { withCredentials: true }
             )
             .then(response => {
               if (response.data.user) {

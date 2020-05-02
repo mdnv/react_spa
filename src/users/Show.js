@@ -17,7 +17,7 @@ export default function UserShow(){
   useEffect(() => {
     axios
       .get(
-        'http://localhost:3000/api/users/'+id,
+        'https://railstutorialapi.herokuapp.com/api/users/'+id,
         {params: {page: page},
         withCredentials: true }
       )
@@ -44,7 +44,7 @@ export default function UserShow(){
 
   const handleUnfollow = (e) => {
     axios
-      .delete('http://localhost:3000/api/relationships/'+id_relationships, { withCredentials: true })
+      .delete('https://railstutorialapi.herokuapp.com/api/relationships/'+id_relationships, { withCredentials: true })
       .then(response => {
         if (response.data.unfollow) {
           setIdRelationships(null);
@@ -59,7 +59,7 @@ export default function UserShow(){
   const handleFollow = (e) => {
     axios
       .post(
-        'http://localhost:3000/api/relationships',
+        'https://railstutorialapi.herokuapp.com/api/relationships',
         {
           followed_id: id
         },
@@ -79,14 +79,14 @@ export default function UserShow(){
   const removeMicropost = (index, micropostid) => {
     axios
       .delete(
-        'http://localhost:3000/api/microposts/'+micropostid, { withCredentials: true }
+        'https://railstutorialapi.herokuapp.com/api/microposts/'+micropostid, { withCredentials: true }
       )
       .then(response => {
         if (response.data.flash) {
           flashMessage(...response.data.flash)
           axios
             .get(
-              'http://localhost:3000/api/users/'+id,
+              'https://railstutorialapi.herokuapp.com/api/users/'+id,
               {params: {page: page},
               withCredentials: true }
             )

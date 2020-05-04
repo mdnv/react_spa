@@ -65,7 +65,7 @@ const Home = ({ userData }) => {
   const handleSubmit = (e) => {
     axios
       .post(
-        "https://railstutorialapi.herokuapp.com/microposts",
+        "https://railstutorialapi.herokuapp.com/api/microposts",
         {
           micropost: {
             content: content
@@ -111,7 +111,7 @@ const Home = ({ userData }) => {
   const removeMicropost = (index, micropostid) => {
     axios
       .delete(
-        'https://railstutorialapi.herokuapp.com/microposts/'+micropostid, { withCredentials: true }
+        'https://railstutorialapi.herokuapp.com/api/microposts/'+micropostid, { withCredentials: true }
       )
       .then(response => {
         if (response.data.flash) {

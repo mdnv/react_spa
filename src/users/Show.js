@@ -139,7 +139,7 @@ export default function UserShow(){
       </aside>
 
       <div className="col-md-8">
-        {Object.keys(current_user).length !== 0 && current_user.constructor === Object && current_user.id !== parseInt(id) &&
+        {current_user && current_user.id !== parseInt(id) &&
         <div id="follow_form">
           {
             user.current_user_following_user ? (

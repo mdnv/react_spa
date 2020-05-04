@@ -41,7 +41,8 @@ const New = ({ userData, fetchUsers }) => {
       .then(response => {
         if (response.data.user) {
           fetchUsers();
-          history.push("/");
+          history.push("/users/"+response.data.user.id);
+          flashMessage(...response.data.flash_success)
         }
         if (response.data.flash) {
           flashMessage(...response.data.flash)

@@ -10,20 +10,20 @@ import { connect } from 'react-redux'
 import { fetchUsers } from '../redux'
 
 const New = ({ userData, fetchUsers }) => {
-  let history = useHistory();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [rememberMe, setRememberme] = useState('1');
+  let history = useHistory()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [rememberMe, setRememberme] = useState('1')
 
   const handleEmailInput = e => {
-    setEmail(e.target.value);
-  };
+    setEmail(e.target.value)
+  }
   const handlePasswordInput = e => {
-    setPassword(e.target.value);
-  };
+    setPassword(e.target.value)
+  }
   const handleRememberMeInput = e => {
-    setRememberme(e.target.value);
-  };
+    setRememberme(e.target.value)
+  }
 
   const handleSubmit = (e) => {
     axios
@@ -50,8 +50,8 @@ const New = ({ userData, fetchUsers }) => {
       })
       .catch(error => {
         console.log(error)
-      });
-    e.preventDefault();
+      })
+    e.preventDefault()
   }
 
   return (
@@ -109,7 +109,7 @@ const New = ({ userData, fetchUsers }) => {
       </div>
     </div>
     </React.Fragment>
-  );
+  )
 }
 
 const mapStateToProps = state => {

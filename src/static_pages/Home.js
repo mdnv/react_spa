@@ -10,6 +10,7 @@ import { useQueryParam, NumberParam } from 'use-query-params'
 import flashMessage from '../shared/flashMessages'
 import Pluralize from 'react-pluralize'
 import Skeleton from 'react-loading-skeleton';
+import API from '../shared/api';
 
 const Home = ({ userData }) => {
   const [page, setPage] = useQueryParam('page', NumberParam);
@@ -28,27 +29,24 @@ const Home = ({ userData }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    axios
-      .get(
-        'https://railstutorialapi.herokuapp.com/api',
-        {params: {page: page, per: per},
-        withCredentials: true }
-      )
-      .then(response => {
-        if (response.data.feed_items) {
-          setFeedItems(response.data.feed_items);
-          setTotalCount(response.data.total_count);
-          setFollowing(response.data.following);
-          setFollowers(response.data.followers);
-          setMicropost(response.data.micropost);
-          setGavatar(response.data.gravatar);
-        } else {
-          setFeedItems([]);
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      });
+    new API().getHttpClient().get('', {params: {page: page, per: per},
+      withCredentials: true }
+    ).then(response => {
+      if (response.data.feed_items) {
+        setFeedItems(response.data.feed_items);
+        setTotalCount(response.data.total_count);
+        setFollowing(response.data.following);
+        setFollowers(response.data.followers);
+        setMicropost(response.data.micropost);
+        setGavatar(response.data.gravatar);
+      } else {
+        setFeedItems([]);
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    });
+
   }, [page, per])
 
   const handlePageChange = pageNumber => {

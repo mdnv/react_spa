@@ -3,6 +3,7 @@ import axios from 'axios'
 import Pagination from 'react-js-pagination'
 import { useSelector } from 'react-redux'
 import flashMessage from '../shared/flashMessages'
+import API from '../shared/api';
 
 export default function Users() {
   const [users, setUsers] = useState([])
@@ -11,13 +12,10 @@ export default function Users() {
   const current_user = useSelector(state => state.user.users)
 
   useEffect(() => {
-    axios
-      .get(
-        'https://railstutorialapi.herokuapp.com/api/users',
-        {params: {page: page},
+      new API().getHttpClient().get('/users', {params: {page: page},
         withCredentials: true }
-      )
-      .then(response => {
+      ).then(response => {
+        console.log(process.env.NODE_ENV)
         if (response.data.users) {
           setUsers(response.data.users);
           setTotalCount(response.data.total_count);

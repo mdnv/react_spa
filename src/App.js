@@ -14,6 +14,7 @@ import routes from './routes'
 import { Provider } from 'react-redux'
 import store from './redux/store'
 import HttpsRedirect from 'react-https-redirect';
+// import API from './shared/api';
 
 toast.configure({
   autoClose: 8000,

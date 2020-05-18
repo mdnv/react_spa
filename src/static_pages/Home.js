@@ -9,6 +9,7 @@ import Pagination from 'react-js-pagination'
 import { useQueryParam, NumberParam } from 'use-query-params'
 import flashMessage from '../shared/flashMessages'
 import Pluralize from 'react-pluralize'
+import Skeleton from 'react-loading-skeleton';
 
 const Home = ({ userData }) => {
   const [page, setPage] = useQueryParam('page', NumberParam);
@@ -142,7 +143,10 @@ const Home = ({ userData }) => {
   };
 
   return userData.loading ? (
-    <h2>Loading</h2>
+    <>
+    <Skeleton height={304} />
+    <Skeleton circle={true} height={60} width={60} />
+    </>
   ) : userData.error ? (
     <h2>{userData.error}</h2>
   ) : userData.users ? (

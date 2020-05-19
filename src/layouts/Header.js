@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import axios from "axios"
 import {
   NavLink,
   useHistory,
 } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchUsers } from '../redux'
+import API from '../shared/api';
 
 export default function Header(){
   let history = useHistory()
@@ -14,12 +14,11 @@ export default function Header(){
 
   useEffect(() => {
     dispatch(fetchUsers())
-  }, [])
+  }, [dispatch])
 
   const onClick = () => {
-    axios
-      .delete("https://railstutorialapi.herokuapp.com/api/logout", { withCredentials: true })
-      .then(response => {
+      new API().getHttpClient().delete('/logout', { withCredentials: true }
+      ).then(response => {
         dispatch(fetchUsers())
         history.push("/")
       })

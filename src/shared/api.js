@@ -1,21 +1,7 @@
 import axios from 'axios';
 
-if (process.env.NODE_ENV === 'production') {
-  var BASE_URL = 'https://railstutorialapi.herokuapp.com/api';
-} else if (process.env.NODE_ENV === 'development') {
-  var BASE_URL = 'http://localhost:3000/api';
-}
-
-// switch(process.env.NODE_ENV) {
-//   case "production":
-//     var BASE_URL = 'https://railstutorialapi.herokuapp.com/api';
-//     break;
-//   case "development":
-//     var BASE_URL = 'http://localhost:3000/api';
-//     break;
-//   default:
-//     var BASE_URL = 'https://railstutorialapi.herokuapp.com/api';
-// }
+const BASE_URL = 'https://railstutorialapi.herokuapp.com/api';
+// const BASE_URL = 'http://localhost:3000/api';
 
 export default class API {
     constructor(lang = 'EN') {

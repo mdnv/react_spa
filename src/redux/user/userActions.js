@@ -1,16 +1,15 @@
-import axios from 'axios'
 import {
   FETCH_USERS_REQUEST,
   FETCH_USERS_SUCCESS,
   FETCH_USERS_FAILURE
 } from './userTypes'
+import API from '../../shared/api';
 
 export const fetchUsers = () => {
   return (dispatch) => {
     dispatch(fetchUsersRequest())
-    axios
-      .get('https://railstutorialapi.herokuapp.com/api/sessions', { withCredentials: true })
-      .then(response => {
+      new API().getHttpClient().get('/sessions', { withCredentials: true }
+      ).then(response => {
         dispatch(fetchUsersSuccess(response.data))
       })
       .catch(error => {

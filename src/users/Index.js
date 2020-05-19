@@ -15,7 +15,6 @@ export default function Users() {
       new API().getHttpClient().get('/users', {params: {page: page},
         withCredentials: true }
       ).then(response => {
-        console.log(process.env.NODE_ENV)
         if (response.data.users) {
           setUsers(response.data.users);
           setTotalCount(response.data.total_count);
@@ -29,13 +28,12 @@ export default function Users() {
   }, [page])
 
   const handlePageChange = pageNumber => {
-    console.log(`active page is ${pageNumber}`);
     setPage(pageNumber);
   }
 
   const removeUser = (index, userid) => {
     let sure = window.confirm("Are you sure?");
-    if (sure == true) {
+    if (sure === true) {
       axios
         .delete(
           'https://railstutorialapi.herokuapp.com/api/users/'+userid, { withCredentials: true }
@@ -51,8 +49,6 @@ export default function Users() {
         .catch(error => {
           console.log(error)
         });
-    } else {
-      // setErrorMessage('')
     }
   };
 
@@ -62,7 +58,7 @@ export default function Users() {
 
     <Pagination
       activePage={page}
-      itemsCountPerPage={5}
+      itemsCountPerPage={25}
       totalItemsCount={total_count}
       pageRangeDisplayed={5}
       onChange={handlePageChange}
@@ -86,9 +82,11 @@ export default function Users() {
       ))}
     </ul>
 
+    {total_count}
+
     <Pagination
       activePage={page}
-      itemsCountPerPage={5}
+      itemsCountPerPage={25}
       totalItemsCount={total_count}
       pageRangeDisplayed={5}
       onChange={handlePageChange}

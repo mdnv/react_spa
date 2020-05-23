@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://railstutorialapi.herokuapp.com/api';
+// const BASE_URL = 'https://railstutorialapi.herokuapp.com/api';
 // const BASE_URL = 'http://localhost:3000/api';
 
-// const BASE_URL = ''
-// if (process.env.NODE_ENV === 'production') {    const BASE_URL = 'https://railstutorialapi.herokuapp.com/api';
-//   BASE_URL = 'https://railstutorialapi.herokuapp.com/api';  // const BASE_URL = 'http://localhost:3000/api';
-// } else if (process.env.NODE_ENV === 'development') {
-//   BASE_URL = 'http://localhost:3000/api';
-// }
+var BASE_URL = ''
+if (process.env.NODE_ENV === 'production') {    
+  BASE_URL = 'https://railstutorialapi.herokuapp.com/api'; 
+} else if (process.env.NODE_ENV === 'development') {
+  BASE_URL = 'http://localhost:3000/api';
+}
 
 // switch(process.env.NODE_ENV) {
 //   case "production":

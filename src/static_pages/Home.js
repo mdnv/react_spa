@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react'
+import React, { useState, useEffect, useRef }  from 'react'
 import logo from '../logo.svg'
 import {
   NavLink,
@@ -19,6 +19,8 @@ const Home = ({ userData }) => {
   const [micropost, setMicropost] = useState()
   const [gravatar, setGavatar] = useState()
   const [content, setContent] = useState('')
+  // const [image, setImage] = useState();
+  const inputEl = useRef(null);
   const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
@@ -42,6 +44,7 @@ const Home = ({ userData }) => {
     .catch(error => {
       console.log(error)
     })
+    // console.log(inputEl.current.files)
 
     return function cleanup() {
       abortController.abort()
@@ -57,11 +60,18 @@ const Home = ({ userData }) => {
     setContent(e.target.value)
   }
 
+  // const handleImageInput = e => {
+  //   setImage(e.target.value);
+  // };
+
   const handleSubmit = (e) => {
+      // console.log(inputEl.current.files[0])
+      let image = inputEl.current.files[0]
       new API().getHttpClient().post('/microposts',
         {
           micropost: {
-            content: content
+            content: content,
+            image: image
           }
         },
         { withCredentials: true }
@@ -191,6 +201,15 @@ const Home = ({ userData }) => {
                 </textarea>
             </div>
             <input type="submit" name="commit" value="Post" className="btn btn-primary" data-disable-with="Post" />
+            <span className="image">
+              <input
+              ref={inputEl}
+              accept="image/jpeg,image/gif,image/png"
+              type="file"
+              name="micropost[image]"
+              id="micropost_image"
+              />
+            </span>
           </form>
         </section>
       </aside>

@@ -7,48 +7,55 @@ import { connect } from 'react-redux'
 import Pagination from 'react-js-pagination'
 import flashMessage from '../shared/flashMessages'
 import Pluralize from 'react-pluralize'
-import Skeleton from 'react-loading-skeleton';
-import API from '../shared/api';
+import Skeleton from 'react-loading-skeleton'
+import API from '../shared/api'
 
 const Home = ({ userData }) => {
-  const [page, setPage] = useState(1);
-  const [feed_items, setFeedItems] = useState([]);
-  const [total_count, setTotalCount] = useState(1);
-  const [following, setFollowing] = useState(null);
-  const [followers, setFollowers] = useState(null);
-  const [micropost, setMicropost] = useState();
-  const [gravatar, setGavatar] = useState();
-  const [content, setContent] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [page, setPage] = useState(1)
+  const [feed_items, setFeedItems] = useState([])
+  const [total_count, setTotalCount] = useState(1)
+  const [following, setFollowing] = useState(null)
+  const [followers, setFollowers] = useState(null)
+  const [micropost, setMicropost] = useState()
+  const [gravatar, setGavatar] = useState()
+  const [content, setContent] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
+    const abortController = new AbortController()
+    const signal = abortController.signal
+
     new API().getHttpClient().get('', {params: {page: page},
-      withCredentials: true }
+      withCredentials: true , signal: signal}
     ).then(response => {
       if (response.data.feed_items) {
-        setFeedItems(response.data.feed_items);
-        setTotalCount(response.data.total_count);
-        setFollowing(response.data.following);
-        setFollowers(response.data.followers);
-        setMicropost(response.data.micropost);
-        setGavatar(response.data.gravatar);
+        setFeedItems(response.data.feed_items)
+        setTotalCount(response.data.total_count)
+        setFollowing(response.data.following)
+        setFollowers(response.data.followers)
+        setMicropost(response.data.micropost)
+        setGavatar(response.data.gravatar)
       } else {
-        setFeedItems([]);
+        setFeedItems([])
       }
     })
     .catch(error => {
       console.log(error)
-    });
+    })
+
+    return function cleanup() {
+      abortController.abort()
+    }
 
   }, [page])
 
   const handlePageChange = pageNumber => {
-    setPage(pageNumber);
+    setPage(pageNumber)
   }
 
   const handleContentInput = e => {
-    setContent(e.target.value);
-  };
+    setContent(e.target.value)
+  }
 
   const handleSubmit = (e) => {
       new API().getHttpClient().post('/microposts',
@@ -70,16 +77,16 @@ const Home = ({ userData }) => {
             )
             .then(response => {
               if (response.data.feed_items) {
-                setFeedItems(response.data.feed_items);
-                setTotalCount(response.data.total_count);
-                setMicropost(response.data.micropost);
+                setFeedItems(response.data.feed_items)
+                setTotalCount(response.data.total_count)
+                setMicropost(response.data.micropost)
               } else {
-                setFeedItems([]);
+                setFeedItems([])
               }
             })
             .catch(error => {
               console.log(error)
-            });
+            })
         }
         if (response.data.error) {
           setErrorMessage(response.data.error)
@@ -87,8 +94,8 @@ const Home = ({ userData }) => {
       })
       .catch(error => {
         console.log(error)
-      });
-    e.preventDefault();
+      })
+    e.preventDefault()
   }
 
   const removeMicropost = (index, micropostid) => {
@@ -104,22 +111,22 @@ const Home = ({ userData }) => {
             )
             .then(response => {
               if (response.data.feed_items) {
-                setFeedItems(response.data.feed_items);
-                setTotalCount(response.data.total_count);
-                setMicropost(response.data.micropost);
+                setFeedItems(response.data.feed_items)
+                setTotalCount(response.data.total_count)
+                setMicropost(response.data.micropost)
               } else {
-                setFeedItems([]);
+                setFeedItems([])
               }
             })
             .catch(error => {
               console.log(error)
-            });
+            })
         }
       })
       .catch(error => {
         console.log(error)
-      });
-  };
+      })
+  }
 
   return userData.loading ? (
     <>

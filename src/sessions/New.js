@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 // import {Redirect} from 'react-router-dom'
-import axios from "axios"
+// import axios from "axios"
 import {
   NavLink,
   useHistory,
@@ -8,12 +8,18 @@ import {
 import flashMessage from '../shared/flashMessages'
 import { connect } from 'react-redux'
 import { fetchUsers } from '../redux'
+import API from '../shared/api'
 
 const New = ({ userData, fetchUsers }) => {
   let history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberme] = useState('1');
+  const inputEl = useRef(null);
+
+  useEffect(() => {
+    inputEl.current.focus();
+  })
 
   const handleEmailInput = e => {
     setEmail(e.target.value);
@@ -26,9 +32,8 @@ const New = ({ userData, fetchUsers }) => {
   };
 
   const handleSubmit = (e) => {
-    axios
-      .post(
-        "https://railstutorialapi.herokuapp.com/api/login",
+    inputEl.current.focus();
+      new API().getHttpClient().post('/login',
         {
           session: {
             email: email,
@@ -69,6 +74,7 @@ const New = ({ userData, fetchUsers }) => {
 
           <label htmlFor="session_email">Email</label>
           <input
+          ref={inputEl}
           className="form-control"
           type="email"
           name="email"
@@ -95,7 +101,7 @@ const New = ({ userData, fetchUsers }) => {
             value="0" />
             <input
             type="checkbox"
-            checked="checked"
+            checked="false"
             name="remember_me"
             id="session_remember_me"
             value={rememberMe}

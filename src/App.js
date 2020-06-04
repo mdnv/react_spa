@@ -26,8 +26,8 @@ let theme = createMuiTheme({
   palette: {
     primary: {
       light: '#63ccff',
-      main: '#009be5',
-      dark: '#006db3',
+      main: '#009be5', // Màu OPACITY / TRANSPARENCY
+      dark: '#FFFFFF',
     },
   },
   typography: {
@@ -57,7 +57,7 @@ theme = {
   overrides: {
     MuiDrawer: {
       paper: {
-        backgroundColor: '#18202c',
+        backgroundColor: '#FFFFFF', // Màu nền side bar
       },
     },
     MuiButton: {
@@ -106,7 +106,7 @@ theme = {
     },
     MuiDivider: {
       root: {
-        backgroundColor: '#404854',
+        backgroundColor: '#FFFFFF', // Viền dưới cùng
       },
     },
     MuiListItemText: {
@@ -116,7 +116,7 @@ theme = {
     },
     MuiListItemIcon: {
       root: {
-        color: 'inherit',
+        color: 'inherit', // Màu icon
         marginRight: 0,
         '& svg': {
           fontSize: 20,

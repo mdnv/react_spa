@@ -12,6 +12,22 @@ import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import { makeStyles } from "@material-ui/core/styles";
+import AddIcon from "@material-ui/icons/Add";
+import Fab from "@material-ui/core/Fab";
+import DeleteIcon from "@material-ui/icons/Delete";
+
+
+const useStyles = makeStyles(theme => ({
+  fab: {
+    margin: theme.spacing(2)
+  },
+  absolute: {
+    position: "absolute",
+    bottom: theme.spacing(2),
+    right: theme.spacing(3)
+  }
+}));
 
 const styles = (theme) => ({
   paper: {
@@ -34,48 +50,28 @@ const styles = (theme) => ({
   contentWrapper: {
     margin: '40px 16px',
   },
+
+  // ----------------------------------------------------------------------------------
+
+  fab: {
+    margin: theme.spacing(2)
+  },
+  absolute: {
+    position: "absolute",
+    bottom: theme.spacing(2),
+    right: theme.spacing(3)
+  }
 });
 
 function Content(props) {
   const { classes } = props;
 
   return (
-    <Paper className={classes.paper}>
-      <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
-        <Toolbar>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item>
-              <SearchIcon className={classes.block} color="inherit" />
-            </Grid>
-            <Grid item xs>
-              <TextField
-                fullWidth
-                placeholder="Search by email address, phone number, or user UID"
-                InputProps={{
-                  disableUnderline: true,
-                  className: classes.searchInput,
-                }}
-              />
-            </Grid>
-            <Grid item>
-              <Button variant="contained" color="primary" className={classes.addUser}>
-                Add user
-              </Button>
-              <Tooltip title="Reload">
-                <IconButton>
-                  <RefreshIcon className={classes.block} color="inherit" />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
-      <div className={classes.contentWrapper}>
-        <Typography color="textSecondary" align="center">
-          No users for this project yet
-        </Typography>
-      </div>
-    </Paper>
+    <Tooltip title="Add" aria-label="add">
+      <Fab color="secondary" className={classes.absolute}>
+        <AddIcon />
+      </Fab>
+    </Tooltip>
   );
 }
 

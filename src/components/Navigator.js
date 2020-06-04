@@ -8,7 +8,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import HomeIcon from '@material-ui/icons/Home';
+// import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
 import PermMediaOutlinedIcon from '@material-ui/icons/PhotoSizeSelectActual';
@@ -18,22 +18,20 @@ import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponen
 import TimerIcon from '@material-ui/icons/Timer';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PhonelinkSetupIcon from '@material-ui/icons/PhonelinkSetup';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import IconButton from '@material-ui/core/IconButton';
 
 const categories = [
   {
     id: 'Develop',
     children: [
-      { id: 'Authentication', icon: <PeopleIcon />, active: true },
-      { id: 'Database', icon: <DnsRoundedIcon /> },
-      { id: 'Storage', icon: <PermMediaOutlinedIcon /> },
-      { id: 'Hosting', icon: <PublicIcon /> },
-      { id: 'Functions', icon: <SettingsEthernetIcon /> },
-      { id: 'ML Kit', icon: <SettingsInputComponentIcon /> },
-    ],
-  },
-  {
-    id: 'Quality',
-    children: [
+      { id: 'Dashboard', icon: <PeopleIcon />, active: true },
+      { id: 'Nhà sản xuất', icon: <DnsRoundedIcon /> },
+      { id: 'CS & Partnership', icon: <PermMediaOutlinedIcon /> },
+      { id: 'Nhà sản xuất đang theo dõi', icon: <PublicIcon /> },
+      { id: 'Bài tiền kiểm', icon: <SettingsEthernetIcon /> },
+      { id: 'Thống kê account seeding', icon: <SettingsInputComponentIcon /> },
+      { id: 'Tài khoản CMS', icon: <SettingsInputComponentIcon /> },
       { id: 'Analytics', icon: <SettingsIcon /> },
       { id: 'Performance', icon: <TimerIcon /> },
       { id: 'Test Lab', icon: <PhonelinkSetupIcon /> },
@@ -52,9 +50,9 @@ const styles = (theme) => ({
   item: {
     paddingTop: 1,
     paddingBottom: 1,
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: '#838A95', // Màu item sidebar
     '&:hover,&:focus': {
-      backgroundColor: 'rgba(255, 255, 255, 0.08)',
+      backgroundColor: 'white', // Hover item
     },
   },
   itemCategory: {
@@ -68,7 +66,8 @@ const styles = (theme) => ({
     color: theme.palette.common.white,
   },
   itemActiveItem: {
-    color: '#4fc3f7',
+    color: '#000123', // Màu chữ active item
+    backgroundColor: '#E4E9EF', // Hover item
   },
   itemPrimary: {
     fontSize: 'inherit',
@@ -88,8 +87,8 @@ function Navigator(props) {
   return (
     <Drawer variant="permanent" {...other}>
       <List disablePadding>
-        <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
-          Here is close button
+        {/* <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
+          
         </ListItem>
         <ListItem className={clsx(classes.item, classes.itemCategory)}>
           <ListItemIcon className={classes.itemIcon}>
@@ -102,10 +101,13 @@ function Navigator(props) {
           >
             Project Overview
           </ListItemText>
-        </ListItem>
+        </ListItem> */}
+        <IconButton>
+          <ArrowBackIcon />
+        </IconButton>
         {categories.map(({ id, children }) => (
           <React.Fragment key={id}>
-            <ListItem className={classes.categoryHeader}>
+            {/* <ListItem className={classes.categoryHeader}>
               <ListItemText
                 classes={{
                   primary: classes.categoryHeaderPrimary,
@@ -113,7 +115,7 @@ function Navigator(props) {
               >
                 {id}
               </ListItemText>
-            </ListItem>
+            </ListItem> */}
             {children.map(({ id: childId, icon, active }) => (
               <ListItem
                 key={childId}

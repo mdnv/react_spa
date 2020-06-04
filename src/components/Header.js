@@ -16,6 +16,16 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import SearchIcon from '@material-ui/icons/Search';
+import Paper from '@material-ui/core/Paper';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -39,14 +49,52 @@ const styles = (theme) => ({
   button: {
     borderColor: lightColor,
   },
+
+  // -------------------------------------------------------------
+
+  paper: {
+    maxWidth: 936,
+    margin: 'auto',
+    overflow: 'hidden',
+  },
+  searchBar: {
+    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+  },
+  searchInput: {
+    fontSize: theme.typography.fontSize,
+  },
+  block: {
+    display: 'block',
+  },
+  addUser: {
+    marginRight: theme.spacing(1),
+  },
+  contentWrapper: {
+    margin: '40px 16px',
+  },
+});
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
 function Header(props) {
   const { classes, onDrawerToggle } = props;
+  const [searchfor, setSearchFor] = React.useState('');
+  const [open, setOpen] = React.useState(false);
+
+  const handleSearchInput = e => {
+    setSearchFor(e.target.value);
+  };
+
+  const handleUserInfoToggle = () => {
+    setOpen(!open);
+    console.log(open);
+  };
 
   return (
     <React.Fragment>
-      <AppBar color="primary" position="sticky" elevation={0}>
+      <AppBar color="white" position="sticky" elevation={0}>
         <Toolbar>
           <Grid container spacing={1} alignItems="center">
             <Hidden smUp>
@@ -61,27 +109,38 @@ function Header(props) {
                 </IconButton>
               </Grid>
             </Hidden>
-            <Grid item xs />
+
+            <Paper className={classes.paper}>
+              <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
+                <Toolbar>
+                  <Grid container spacing={2} alignItems="center">
+                    <Grid item>
+                      <SearchIcon className={classes.block} color="inherit" />
+                    </Grid>
+                    <Grid item xs>
+                      <TextField
+                        fullWidth
+                        placeholder="Tìm kiếm page..."
+                        InputProps={{
+                          disableUnderline: true,
+                          className: classes.searchInput,
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+                </Toolbar>
+              </AppBar>
+            </Paper>
+
             <Grid item>
-              <Link className={classes.link} href="#" variant="body2">
-                Go to docs
-              </Link>
-            </Grid>
-            <Grid item>
-              <Tooltip title="Alerts • No alerts">
-                <IconButton color="inherit">
-                  <NotificationsIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-            <Grid item>
-              <IconButton color="inherit" className={classes.iconButtonAvatar}>
+              <IconButton color="inherit" className={classes.iconButtonAvatar} onClick={handleUserInfoToggle}>
                 <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
               </IconButton>
             </Grid>
           </Grid>
         </Toolbar>
       </AppBar>
+
       <AppBar
         component="div"
         className={classes.secondaryBar}
@@ -89,42 +148,24 @@ function Header(props) {
         position="static"
         elevation={0}
       >
-        <Toolbar>
-          <Grid container alignItems="center" spacing={1}>
-            <Grid item xs>
-              <Typography color="inherit" variant="h5" component="h1">
-                Authentication
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Button className={classes.button} variant="outlined" color="inherit" size="small">
-                Web setup
-              </Button>
-            </Grid>
-            <Grid item>
-              <Tooltip title="Help">
-                <IconButton color="inherit">
-                  <HelpIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-          </Grid>
-        </Toolbar>
       </AppBar>
-      <AppBar
-        component="div"
-        className={classes.secondaryBar}
-        color="primary"
-        position="static"
-        elevation={0}
+
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleUserInfoToggle}
+        aria-labelledby="customized-dialog-title"
       >
-        <Tabs value={0} textColor="inherit">
-          <Tab textColor="inherit" label="Users" />
-          <Tab textColor="inherit" label="Sign-in method" />
-          <Tab textColor="inherit" label="Templates" />
-          <Tab textColor="inherit" label="Usage" />
-        </Tabs>
-      </AppBar>
+        <DialogTitle id="customized-dialog-title">
+          Admin
+        </DialogTitle>
+        <DialogContent dividers>
+          <IconButton>
+            <ExitToAppIcon /> Đăng xuất
+          </IconButton>
+        </DialogContent>
+      </Dialog>
     </React.Fragment>
   );
 }

@@ -8,6 +8,7 @@ import Link from '@material-ui/core/Link';
 import Navigator from './components/Navigator';
 import Content from './components/Content';
 import Header from './components/Header';
+import './App.css'
 
 function Copyright() {
   return (

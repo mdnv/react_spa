@@ -58,7 +58,7 @@ export default function Users() {
 
     <Pagination
       activePage={page}
-      itemsCountPerPage={25}
+      itemsCountPerPage={5}
       totalItemsCount={total_count}
       pageRangeDisplayed={5}
       onChange={handlePageChange}
@@ -82,11 +82,9 @@ export default function Users() {
       ))}
     </ul>
 
-    {total_count}
-
     <Pagination
       activePage={page}
-      itemsCountPerPage={25}
+      itemsCountPerPage={5}
       totalItemsCount={total_count}
       pageRangeDisplayed={5}
       onChange={handlePageChange}

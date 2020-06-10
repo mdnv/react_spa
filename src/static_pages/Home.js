@@ -118,25 +118,21 @@ const Home = ({ userData }) => {
         content
       );
       if (image) {
-      const res = formData2.append('micropost[image]',
+      formData2.append('micropost[image]',
         image,
         image.name
       );
       }
 
-      fetch(`http://localhost:3000/api/microposts`, {
+      fetch(`https://railstutorialapi.herokuapp.com/api/microposts`, {
         method: "POST",
         body: formData2,
         credentials: 'include'
       })
-      .then(response => {
-        // if (response.data.flash) {
-          if (content) {
-            flashMessage("success", "Micropost created!")
-          } else {
-            setErrorMessage(["Content can't be blank"])
-            console.log(errorMessage)
-          }
+      .then(response => response.json().then(data => {
+        
+        if (data.flash) {
+          flashMessage(...data.flash)
           setContent('')
           setImage(null)
           document.querySelector('[name="micropost[image]"]').value = null
@@ -157,11 +153,13 @@ const Home = ({ userData }) => {
             .catch(error => {
               console.log(error)
             })
-        // }
-        // if (response.data.error) {
-        //   setErrorMessage(response.data.error)
-        // }
+        }
+        if (data.error) {
+          setErrorMessage(data.error)
+        }
+
       })
+      )
 
     e.preventDefault()
   }
